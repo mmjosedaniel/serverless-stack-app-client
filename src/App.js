@@ -1,19 +1,24 @@
 import { LinkContainer } from "react-router-bootstrap";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import "./App.css";
 import Routes from "./Routes";
 import { AppContext } from "./libs/contextLib";
 import Amplify from 'aws-amplify';
 
+
 function App() {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
+
+  const history = useHistory();
 
   async function handleLogout() {
     await Amplify.Auth.signOut();
   
     userHasAuthenticated(false);
+    
+    history.push("/login");
   }
   
   return (
